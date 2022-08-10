@@ -15,21 +15,8 @@ import com.zee.zee5app.repo.MovieRepositoryImpl;
 
 public class MovieServiceImpl implements MovieService {
 
-	private MovieServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
 	
-	private static MovieService movieServiceImpl;	// this is of Interface type
-	
-	public static MovieService getInstance() {
-		if(movieServiceImpl == null) {
-			movieServiceImpl = new MovieServiceImpl();
-		}
-		return movieServiceImpl;
-		
-	}
-	
-	private MovieRepository movieRepository = MovieRepositoryImpl.getInstance();  // Interface ref = class object()
+	private MovieRepository movieRepository; // Interface ref = class object()
 	
 	@Override
 	public Movie insertMovie(Movie movie) throws UnableToGenerateIdException, FileNotFoundException {

@@ -28,23 +28,7 @@ import com.zee.zee5app.utils.DBUtils;
 
 public class MovieRepositoryImpl implements MovieRepository {
 
-	private MovieRepositoryImpl() {
-		
-    }
-    
-    private static MovieRepository movieRepository;
-    
-    public static MovieRepository getInstance() {
-        
-        if(movieRepository == null) {
-        	movieRepository = new MovieRepositoryImpl();
-            
-        }
-        
-        return movieRepository;
-    }
-
-    private DBUtils dbUtils = DBUtils.getInstance();
+    private DBUtils dbUtils;
     
 	@Override
 	public Movie insertMovie(Movie movie) throws UnableToGenerateIdException, FileNotFoundException {

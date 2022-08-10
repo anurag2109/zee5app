@@ -12,18 +12,18 @@ import com.zee.zee5app.exceptions.UnableToGenerateIdException;
 
 public class DBUtils {
 
-	private DBUtils() {
-
-	}
-
-	private static DBUtils dbUtils;
-
-	public static DBUtils getInstance() {
-		if (dbUtils == null) {
-			dbUtils = new DBUtils();
-		}
-		return dbUtils;
-	}
+//	private DBUtils() {
+//
+//	}
+//
+//	private static DBUtils dbUtils;
+//
+//	public static DBUtils getInstance() {
+//		if (dbUtils == null) {
+//			dbUtils = new DBUtils();
+//		}
+//		return dbUtils;
+//	}
 	
 	private Properties loadProperties(){
 		Properties properties = new Properties();
@@ -76,7 +76,7 @@ public class DBUtils {
 		ResultSet resultSet = null;
 		int old_id;
 		// connection object
-		connection = dbUtils.getConnection();
+		connection = this.getConnection();
 		
 		try {
 			// get old id from useridgenerator table and increment the id and append it for userid
@@ -116,7 +116,7 @@ public class DBUtils {
 		ResultSet resultSet = null;
 		int old_id;
 		// connection object
-		connection = dbUtils.getConnection();
+		connection = this.getConnection();
 		
 		try {
 			// get old id from useridgenerator table and increment the id and append it for userid
@@ -156,7 +156,7 @@ public class DBUtils {
 		ResultSet resultSet = null;
 		int old_id;
 		// connection object
-		connection = dbUtils.getConnection();
+		connection = this.getConnection();
 		
 		try {
 			// get old id from useridgenerator table and increment the id and append it for userid
@@ -192,3 +192,4 @@ public class DBUtils {
 
 	
 }
+

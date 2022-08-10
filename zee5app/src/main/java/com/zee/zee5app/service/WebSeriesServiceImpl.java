@@ -15,21 +15,8 @@ import com.zee.zee5app.repo.WebSeriesRepositoryImpl;
 
 public class WebSeriesServiceImpl implements WebSeriesService {
 
-	private WebSeriesServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
 	
-	private static WebSeriesService movieServiceImpl;	// this is of Interface type
-	
-	public static WebSeriesService getInstance() {
-		if(movieServiceImpl == null) {
-			movieServiceImpl = new WebSeriesServiceImpl();
-		}
-		return movieServiceImpl;
-		
-	}
-	
-	private WebSeriesRepository movieRepository = WebSeriesRepositoryImpl.getInstance();  // Interface ref = class object()
+	private WebSeriesRepository movieRepository;  // Interface ref = class object()
 	
 	@Override
 	public WebSeries insertWebSeries(WebSeries movie) throws UnableToGenerateIdException, FileNotFoundException {

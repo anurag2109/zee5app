@@ -15,22 +15,8 @@ import com.zee.zee5app.exceptions.UnableToGenerateIdException;
 import com.zee.zee5app.utils.DBUtils;
 
 public class UserRepositoryImpl implements UserRepo {
-
-	private UserRepositoryImpl() {
-		
-	}
-	private static UserRepo userRepo;
-	public static UserRepo getInstance() {
-		if(userRepo == null) {
-			userRepo = new UserRepositoryImpl();
-		}
-		return userRepo;
-	}
 	
-	
-	
-	
-	private DBUtils dbUtils = DBUtils.getInstance();
+	private DBUtils dbUtils;
 	
 	@Override
 	public User insertUser(User user) throws UnableToGenerateIdException {

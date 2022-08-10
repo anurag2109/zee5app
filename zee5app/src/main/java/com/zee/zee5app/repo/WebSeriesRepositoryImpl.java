@@ -28,23 +28,7 @@ import com.zee.zee5app.utils.DBUtils;
 
 public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 
-	private WebSeriesRepositoryImpl() {
-		
-    }
-    
-    private static WebSeriesRepository webSeriesRepository;
-    
-    public static WebSeriesRepository getInstance() {
-        
-        if(webSeriesRepository == null) {
-        	webSeriesRepository = new WebSeriesRepositoryImpl();
-            
-        }
-        
-        return webSeriesRepository;
-    }
-
-    private DBUtils dbUtils = DBUtils.getInstance();
+    private DBUtils dbUtils;
     
 	@Override
 	public WebSeries insertWebSeries(WebSeries webSeries) throws UnableToGenerateIdException, FileNotFoundException {

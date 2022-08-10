@@ -12,25 +12,8 @@ import com.zee.zee5app.repo.UserRepositoryImpl;
 public class UserServiceImpl implements UserService {
 	
 	
-	// -------- creating singleton object ------------------
-	// steps:
-	// 1. create private constructor
-	// 2. create private static reference of Interface pointing to "null"
-	// 3. create public static getInstance function 
 	
-	private UserServiceImpl() {
-		
-	}
-	private static UserService service = null;
-	public static UserService getUserServiceInstance() {
-		if(service == null) {
-			service = new UserServiceImpl();
-		}
-		return service;
-	}
-	// ------------------------------------------------------
-	
-	private UserRepo repo = UserRepositoryImpl.getInstance();
+	private UserRepo repo;
 	
 	// insertion user
 	@Override
