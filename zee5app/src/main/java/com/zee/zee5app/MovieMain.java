@@ -24,12 +24,12 @@ public class MovieMain {
 		Geners geners = Geners.ACTION;
 		try {
 		movieService.insertMovie(new Movie(actors, "Jeet", "Kajol", geners, "Darma", language, 180.9f, "D:\\trailer.mp4"));
-		System.out.println("getMovieByMovieId: "+movieService.getMovieByMovieId("Je1").get());
+		System.out.println("getMovieByMovieId: "+movieService.getMovieByMovieId("Je00000010").get());
 		System.out.println("getAllMovies: "+movieService.getAllMovies().get());
 		System.out.println("getAllMoviesByGenre: "+ movieService.getAllMoviesByGenre(Geners.ACTION.name()).get());
 		System.out.println("getAllMoviesByName: "+ movieService.getAllMoviesByName("Jeet").get());
 		System.out.println("findByOrderByMovieNameDsc: "+ movieService.findByOrderByMovieNameDsc());
-		System.out.println("deleteMovieByMovieId: "+ movieService.deleteMovieByMovieId("Je1"));
+		System.out.println("deleteMovieByMovieId: "+ movieService.deleteMovieByMovieId("Je00000010"));
 		
 		} catch (InvalidIdException | FileNotFoundException | InvalidNameException | UnableToGenerateIdException | NoDataFoundException e) {
 			// TODO Auto-generated catch block

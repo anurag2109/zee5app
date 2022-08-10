@@ -13,51 +13,58 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Movie {
+public class WebSeries {
 	
-	public Movie(String[] actors, String movieName, String director, Geners genre, String production,
-			String[] languages, float movieLength, String trailer1) throws InvalidIdException, InvalidNameException {
+	
+	public WebSeries(String[] actors, String webSeriesName, String director, Geners genre, String production,
+			String[] languages, int episodes, String trailer1) throws InvalidNameException {
 		super();
-		this.actors = actors;
-		this.setMovieName(movieName);
-		this.director = director;
-		this.genre = genre;
-		this.production = production;
+		this.setActors(actors);
+		this.setWebSeriesName(webSeriesName);
+		this.setDirector(director);
+		this.setGenre(genre);
+		this.setProduction(production);
 		this.setLanguages(languages);
-		this.movieLength = movieLength;
+		this.setEpisodes(episodes);
 		this.setTrailer1(trailer1);
 	}
-	
-	public void setMovieId(String movieId) throws InvalidIdException {
-		// movie id should be 10 chars
-		int length = movieId.length();
-		if(length == 10)
-		{
-			this.movieId = movieId;
-		}
-		else {
-			throw new InvalidIdException("Invalid movie id");
-		}
+
+	public void setWebSeriesId(String webSeriesId) throws InvalidIdException {
+		int len = webSeriesId.length();
+		if(len == 10)
+			this.webSeriesId = webSeriesId;
+		else
+			throw new InvalidIdException("Id must be of size 10");
 	}
+
 	public void setActors(String[] actors) {
 		this.actors = actors;
 	}
-	public void setMovieName(String movieName) throws InvalidNameException {
-		if(movieName =="" || movieName == null || movieName.length() < 3) {			
-			throw new InvalidNameException("Invalid movie name !!");
-		}else {
-			this.movieName = movieName;
-		}
-	}
+
 	public void setDirector(String director) {
 		this.director = director;
 	}
+
 	public void setGenre(Geners genre) {
 		this.genre = genre;
 	}
+
 	public void setProduction(String production) {
 		this.production = production;
 	}
+
+	public void setEpisodes(int episodes) {
+		this.episodes = episodes;
+	}
+
+	public void setWebSeriesName(String webSeriesName) throws InvalidNameException {
+		if(webSeriesName =="" || webSeriesName == null || webSeriesName.length() < 3) {			
+			throw new InvalidNameException("Invalid movie name !!");
+		}else {
+			this.webSeriesName = webSeriesName;
+		}
+	}
+	
 	public void setLanguages(String[] languages) throws InvalidNameException {
 		int count = 0;
 		for (String string : languages) {
@@ -73,23 +80,20 @@ public class Movie {
 		else
 			throw new InvalidNameException(director);
 	}
-	public void setMovieLength(float movieLength) {
-		this.movieLength = movieLength;
+	
+	public void setTrailer1(String trailer1) {
+		this.trailer1 = trailer1;
 	}
-	public Movie() {
+	public WebSeries() {
 		
 	}
-	private String movieId;
+	private String webSeriesId;
     private String actors[];
-    private String movieName;
+    private String webSeriesName;
     private String director;
     private Geners genre;
     private String production;
-    public void setTrailer1(String trailer1) {
-		this.trailer1 = trailer1;
-	}
 	private String languages[];
-    private float movieLength;
+    private int episodes;
     private String trailer1;
-//    private byte[] trailer2;
 }

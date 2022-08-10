@@ -61,7 +61,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 				bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
 				bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("d:\\zee5app\\trailers\\"+file.getName()), 2048);
 				bufferedOutputStream.write(bufferedInputStream.readAllBytes());
-				System.out.println(file.getName());
+//				System.out.println(file.getName());
 				
 			} 
 		} catch (IOException e1) {
@@ -120,15 +120,14 @@ public class MovieRepositoryImpl implements MovieRepository {
 		connection = dbUtils.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
-			preparedStatement.setString(1, movie.getMovieId());
-			preparedStatement.setString(2, String.join(",", movie.getActors()));
-			preparedStatement.setString(3, movie.getMovieName());
-			preparedStatement.setString(4, movie.getDirector());
-			preparedStatement.setString(5, movie.getGenre().name());
-			preparedStatement.setString(6,movie.getProduction());
-			preparedStatement.setString(7, String.join(",", movie.getLanguages()));
-			preparedStatement.setFloat(8, movie.getMovieLength());
-			preparedStatement.setString(9,movie.getTrailer1());
+			preparedStatement.setString(1, String.join(",", movie.getActors()));
+			preparedStatement.setString(2, movie.getMovieName());
+			preparedStatement.setString(3, movie.getDirector());
+			preparedStatement.setString(4, movie.getGenre().name());
+			preparedStatement.setString(5,movie.getProduction());
+			preparedStatement.setString(6, String.join(",", movie.getLanguages()));
+			preparedStatement.setFloat(7, movie.getMovieLength());
+			preparedStatement.setString(8,movie.getTrailer1());
 			int res = preparedStatement.executeUpdate();
 			if(res > 0)
 				return Optional.of(movie);
