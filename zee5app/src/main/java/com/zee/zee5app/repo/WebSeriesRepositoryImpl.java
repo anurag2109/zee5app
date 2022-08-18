@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.naming.InvalidNameException;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.zee.zee5app.dto.WebSeries;
 import com.zee.zee5app.enums.Geners;
@@ -26,13 +30,18 @@ import com.zee.zee5app.exceptions.NoDataFoundException;
 import com.zee.zee5app.exceptions.UnableToGenerateIdException;
 import com.zee.zee5app.utils.DBUtils;
 
+@Repository
 public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 
+	@Autowired
+	DataSource dataSource;
+	
+	@Autowired
     private DBUtils dbUtils;
     
 	@Override
 	public WebSeries insertWebSeries(WebSeries webSeries) throws UnableToGenerateIdException, FileNotFoundException {
-		// trailer file exist or not 
+		// trailer file exist or not
 		BufferedInputStream bufferedInputStream = null;
 		BufferedOutputStream bufferedOutputStream = null;
 		File file = new File(webSeries.getTrailer1());
@@ -65,10 +74,10 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 				+ " values(?,?,?,?,?,?,?,?,?)";
 		
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(prepared)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(insertStatement);
 			preparedStatement.setString(1, dbUtils.webSeriesIdGenerator(webSeries.getWebSeriesName()));
 			String actors_name = String.join(",", webSeries.getActors());
@@ -89,8 +98,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		
 		return null;
@@ -101,8 +108,8 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String deleteStatement = "update webseries set actors=?, webseriesname=?, director=?, genre=?, production=?, languages=?,numberofepisodes=?, trailer=?";
-		connection = dbUtils.getConnection();
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, String.join(",", webSeries.getActors()));
 			preparedStatement.setString(2, webSeries.getWebSeriesName());
@@ -119,8 +126,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 				throw new NoDataFoundException("No data found to update with this webSeries Id !!!");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -132,10 +137,10 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		String query = "select * from webseries where webseriesid=?";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, webSeriesId);
 			resultSet = preparedStatement.executeQuery();
@@ -159,8 +164,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -173,10 +176,10 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		String query = "select * from webseries";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<WebSeries> webSeriess = new ArrayList<>();
@@ -199,8 +202,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 			return Optional.of(webSeriess);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -213,10 +214,10 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		String query = "select * from webseries";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<WebSeries> webSeriess = new ArrayList<>();
@@ -241,8 +242,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 			return Optional.of(webSeriess);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -256,10 +255,10 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		String query = "select * from webseries";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<WebSeries> webSeriess = new ArrayList<>();
@@ -287,8 +286,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 			return Optional.of(webSeriess);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -301,10 +298,10 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		String query = "select * from webseries";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<WebSeries> webSeriess = new ArrayList<>();
@@ -332,8 +329,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 			return Optional.of(webSeriess);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -343,8 +338,8 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String deleteStatement = "delete from webseries where webseriesid=?";
-		connection = dbUtils.getConnection();
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, webSeriesId);
 			int res = preparedStatement.executeUpdate();
@@ -354,8 +349,6 @@ public class WebSeriesRepositoryImpl implements WebSeriesRepository {
 				throw new NoDataFoundException("No data found to delete with this user Id !!!");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			dbUtils.closeConnection(connection);
 		}
 		return null;
 	}

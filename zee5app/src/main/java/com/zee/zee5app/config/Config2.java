@@ -1,29 +1,19 @@
 package com.zee.zee5app.config;
 
-import java.util.Properties;
-
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@Import(Config2.class)
-@ComponentScan(basePackages = "com.zee.zee5app")
-@PropertySource(value = "application.properties")
-public class Config {
-	
+public class Config2 {
 	@Autowired
-	Environment environment; // this will help to read or get the property content(that means retrieval part)
+	Environment environment;
 	
-	//datasource -----> get the connection object
-	@Bean("dataSource")
+	@Bean("dataSource2")
 	public DataSource getDataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
 		basicDataSource.setUsername(environment.getProperty("db.username"));
@@ -31,5 +21,4 @@ public class Config {
 		basicDataSource.setPassword(environment.getProperty("db.password"));
 		return basicDataSource;
 	}
-	
 }

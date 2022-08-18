@@ -8,8 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+
+import org.springframework.stereotype.Component;
+
 import com.zee.zee5app.exceptions.UnableToGenerateIdException;
 
+
+@Component
 public class DBUtils {
 
 //	private DBUtils() {

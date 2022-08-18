@@ -6,6 +6,9 @@ import java.util.Optional;
 
 import javax.naming.InvalidNameException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.exceptions.InvalidIdException;
 import com.zee.zee5app.exceptions.NoDataFoundException;
@@ -13,9 +16,10 @@ import com.zee.zee5app.exceptions.UnableToGenerateIdException;
 import com.zee.zee5app.repo.MovieRepository;
 import com.zee.zee5app.repo.MovieRepositoryImpl;
 
+@Service
 public class MovieServiceImpl implements MovieService {
 
-	
+	@Autowired
 	private MovieRepository movieRepository; // Interface ref = class object()
 	
 	@Override

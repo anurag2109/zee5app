@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.naming.InvalidNameException;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.enums.Geners;
@@ -26,8 +30,13 @@ import com.zee.zee5app.exceptions.NoDataFoundException;
 import com.zee.zee5app.exceptions.UnableToGenerateIdException;
 import com.zee.zee5app.utils.DBUtils;
 
+@Repository
 public class MovieRepositoryImpl implements MovieRepository {
 
+	@Autowired
+	DataSource dataSource;
+	
+	@Autowired
     private DBUtils dbUtils;
     
 	@Override
@@ -65,10 +74,10 @@ public class MovieRepositoryImpl implements MovieRepository {
 				+ " values(?,?,?,?,?,?,?,?,?)";
 		
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(prepared)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(insertStatement);
 			preparedStatement.setString(1, dbUtils.movieIdGenerator(movie.getMovieName()));
 			String actors_name = String.join(",", movie.getActors());
@@ -89,8 +98,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		
 		return null;
@@ -100,9 +107,9 @@ public class MovieRepositoryImpl implements MovieRepository {
 	public Optional<Movie> updateMovie(String movieId, Movie movie) throws NoDataFoundException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String deleteStatement = "update movies set movieid=?, actors=?, moviename=?, director=?, genre=?, production=?, languages=?,movielength=?, trailer=?";
-		connection = dbUtils.getConnection();
+		String deleteStatement = "update movies set actors=?, moviename=?, director=?, genre=?, production=?, languages=?,movielength=?, trailer=? where movieid=?";
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, String.join(",", movie.getActors()));
 			preparedStatement.setString(2, movie.getMovieName());
@@ -112,6 +119,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 			preparedStatement.setString(6, String.join(",", movie.getLanguages()));
 			preparedStatement.setFloat(7, movie.getMovieLength());
 			preparedStatement.setString(8,movie.getTrailer1());
+			preparedStatement.setString(9,movieId);
 			int res = preparedStatement.executeUpdate();
 			if(res > 0)
 				return Optional.of(movie);
@@ -119,8 +127,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 				throw new NoDataFoundException("No data found to update with this movie Id !!!");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -132,10 +138,10 @@ public class MovieRepositoryImpl implements MovieRepository {
 		String query = "select * from movies where movieid=?";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, movieId);
 			resultSet = preparedStatement.executeQuery();
@@ -158,8 +164,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -172,10 +176,10 @@ public class MovieRepositoryImpl implements MovieRepository {
 		String query = "select * from movies";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<Movie> movies = new ArrayList<>();
@@ -197,8 +201,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 			return Optional.of(movies);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -211,10 +213,10 @@ public class MovieRepositoryImpl implements MovieRepository {
 		String query = "select * from movies";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<Movie> movies = new ArrayList<>();
@@ -238,8 +240,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 			return Optional.of(movies);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -253,10 +253,10 @@ public class MovieRepositoryImpl implements MovieRepository {
 		String query = "select * from movies";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<Movie> movies = new ArrayList<>();
@@ -283,8 +283,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 			return Optional.of(movies);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -297,10 +295,10 @@ public class MovieRepositoryImpl implements MovieRepository {
 		String query = "select * from movies";
 		ResultSet resultSet = null;
 		// connection object
-		connection = dbUtils.getConnection();
 		
 		// statement object(preparedstatement)
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			List<Movie> movies = new ArrayList<>();
@@ -327,8 +325,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 			return Optional.of(movies);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -338,8 +334,8 @@ public class MovieRepositoryImpl implements MovieRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String deleteStatement = "delete from movies where movieid=?";
-		connection = dbUtils.getConnection();
 		try {
+			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, movieId);
 			int res = preparedStatement.executeUpdate();
@@ -349,8 +345,6 @@ public class MovieRepositoryImpl implements MovieRepository {
 				throw new NoDataFoundException("No data found to delete with this user Id !!!");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			dbUtils.closeConnection(connection);
 		}
 		return null;
 	}
